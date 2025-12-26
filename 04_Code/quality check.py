@@ -82,5 +82,53 @@ print(285/598) # about 48% of the power plays placed the starting stones on the 
 
 # %%
 # checking the Games data
+df_games = pd.read_csv('../03_Data/Games.csv')
+print(df_games.shape)
+print(df_games.head())
+print(df_games.tail())
+
+# %%
+cols = [
+    'CompetitionID', 'SessionID', 'GameID', 'GroupID', 'Sheet',
+    'NOC1', 'NOC2', 'LSFE', 'Winner', 'TeamID1', 'TeamID2'
+]
+
+df_games[cols].nunique()
+
+# %%
+df_games.isna().sum()
+
+# %%
+df_games.duplicated(subset=['SessionID', 'GameID', 'CompetitionID']).any()
+
+# %%
 # checking the Stones data
+df_stones = pd.read_csv('../03_Data/Stones.csv')
+print(df_stones.shape)
+print(df_stones.head())
+print(df_stones.tail())
+
+# %%
+df_stones.columns
+
+# %%
+print(len(df_stones['Task'].unique()))
+
+# %%
 # checking the Teams data
+df_teams = pd.read_csv('../03_Data/Teams.csv')
+print(df_teams.shape)
+print(df_teams.head())
+print(df_teams.tail())
+
+# %%
+cols = df_teams.columns.tolist()
+
+df_teams[cols].nunique()
+
+# %%
+df_teams['NOC'].value_counts(dropna=False)
+
+# %%
+df_teams['Name'].value_counts(dropna=False)
+# %%
