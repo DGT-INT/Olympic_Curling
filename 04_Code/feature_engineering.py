@@ -66,3 +66,22 @@ stones_data['defensive_intent'].value_counts(normalize=True) *100
 stones_data['defensive_intent_shot1'].value_counts(normalize=True)* 100
 
 # %%
+stones_data['defensive_intent_shot2'] = (
+    stones_data.groupby(shots_by_team)['defensive_intent']
+    .transform(lambda x: x.iloc[1] if len(x) > 1 else None)
+)
+
+cols_to_show = list(stones_data.loc[:, 'CompetitionID':'Task'].columns) + ['defensive_intent', 'defensive_intent_shot1', 'defensive_intent_shot2']
+stones_data[cols_to_show].head(30)
+
+# %%
+stones_data['defensive_intent_shot2'].value_counts(normalize=True)*100
+
+# %%
+stones_data['defensive_structure'] = stones_data['defensive_intent_shot1'] + '-' + stones_data['defensive_intent_shot2'].fillna('none')
+stones_data['defensive_structure'].value_counts(normalize=True)*100
+
+# %%
+
+
+# %%
