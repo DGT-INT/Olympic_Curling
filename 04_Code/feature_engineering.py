@@ -119,6 +119,29 @@ master_data = (
     )
 )
 
+# %%
 master_data.shape
+master_data =master_data.drop(columns=['ShotID'])
+master_data.head()
 
+# %%
+master_data = master_data[
+    ['CompetitionID', 'SessionID', 'GameID', 'EndID', 'TeamID', 'defensive_intent_shot1', 'defensive_intent_shot2', 'defensive_structure', 'PowerPlay', 'Result']
+]
+
+master_data = master_data.sort_values(
+    by=['CompetitionID', 'SessionID', 'GameID', 'EndID', 'TeamID']
+).reset_index(drop=True)
+
+master_data.head(30)
+
+# %%
+master_data.rename(columns={
+    'TeamID': 'TeamID_W_PP',
+    'Result': 'Result_W_PP'
+    }, inplace=True)
+master_data.columns 
+
+# %%
+# need to get opposing team results
 # %%
