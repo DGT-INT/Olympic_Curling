@@ -82,6 +82,43 @@ stones_data['defensive_structure'] = stones_data['defensive_intent_shot1'] + '-'
 stones_data['defensive_structure'].value_counts(normalize=True)*100
 
 # %%
+# Now that i have my defensive_structure feature, I can start to analyze if early defensive intent in power plays is associated with different scoring outcomes.
+ends_data = pd.read_csv('../03_Data/Ends.csv')
+ends_data.head()
 
+# %%    
+stones_data.shape
+# %%
+master_data = pd.merge(
+    stones_data[['CompetitionID', 'SessionID', 'GameID', 'TeamID', 'EndID', 'ShotID', 'defensive_intent', 'defensive_intent_shot1', 'defensive_intent_shot2', 'defensive_structure']],
+    ends_data[['CompetitionID', 'SessionID', 'GameID', 'TeamID','EndID', 'Result', 'PowerPlay']],
+    on=['CompetitionID', 'SessionID', 'GameID', 'TeamID', 'EndID'],
+    how='left'
+)
+
+master_data.shape
+master_data.columns
+master_data['PowerPlay'].value_counts(dropna=False)
+# %%
+# adjusting data frame to end-level with power plays
+master_data = master_data.dropna(subset=['PowerPlay'])
+master_data['PowerPlay'].value_counts(dropna=False)
+master_data.shape
+
+# %%
+master_data[
+    ['CompetitionID', 'SessionID', 'GameID', 'TeamID', 'EndID']
+].drop_duplicates().shape[0]
+
+# %%
+master_data = (
+    master_data
+    .drop_duplicates(
+        subset=['CompetitionID', 'SessionID', 'GameID', 'TeamID', 'EndID'],
+        keep='first'
+    )
+)
+
+master_data.shape
 
 # %%
